@@ -30,12 +30,14 @@ word = chooseRandomWord()
 
 print(Constants.logo)
 
-while lives > 0:
-    renderBoard(word, tryedLetters)
-    addUserLetterInput()
-    if lives == 0:
-        print(Constants.stages[0])
-        print("Game over")
+def game():
+    while lives > 0:
+        renderBoard(word, tryedLetters)
+        addUserLetterInput()
+        if lives == 0:
+            print(Constants.stages[0])
+            print("Game over")
 
 
+game()
 
