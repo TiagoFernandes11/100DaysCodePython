@@ -1,4 +1,4 @@
-print("""           
+logo = """           
  ,adPPYba, ,adPPYYba,  ,adPPYba, ,adPPYba, ,adPPYYba, 8b,dPPYba,  
 a8"     "" ""     `Y8 a8P_____88 I8[    "" ""     `Y8 88P'   "Y8  
 8b         ,adPPPPP88 8PP"""""""  `"Y8ba,  ,adPPPPP88 88          
@@ -14,7 +14,7 @@ a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8
  `"Ybbd8"' 88 88`YbbdP"'  88       88  `"Ybbd8"' 88          
               88                                             
               88           
-""")
+"""
 
 
 alphabet_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -43,5 +43,21 @@ def decode(message, shiftNumber):
     for i in message:
         encodedMessage += encoded_alphabet_array[alphabet_array.index(i)]
     return encodedMessage
+
+def program():
+    print(logo)
+    resp = "yes"
+    while(resp != "no"):
+        resp = input("Type 'encode' to encrypt. Type 'decode' to decrypt\n")
+        if(resp == "encode"):
+            tempMessage = input("Type your message: ").upper()
+            tempKey = int(input("Type the shift number: "))
+            print("The result of the encryption is: " + encode(tempMessage, tempKey))
+        if(resp == "decode"):
+            tempMessage = input("Type your message: ").upper()
+            tempKey = int(input("Type the shift number"))
+            print("The result of the encryption is: " + decode(tempMessage, tempKey))
+        resp = input("Type 'yes' if you wanna go again. Otherwise type 'no'\n")
     
+program()
 
