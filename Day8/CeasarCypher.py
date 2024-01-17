@@ -19,9 +19,10 @@ a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8
 
 alphabet_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-encoded_alphabet_array = []
+
 
 def encode(message, shiftNumber):
+    encoded_alphabet_array = []
     for i in range(shiftNumber, len(alphabet_array) -1):
         encoded_alphabet_array.append(alphabet_array[i])
         i += 1
@@ -32,4 +33,15 @@ def encode(message, shiftNumber):
         encodedMessage += encoded_alphabet_array[alphabet_array.index(i)]
     return encodedMessage
 
-print(encode("hellocoder".upper(), 9))
+def decode(message, shiftNumber):
+    encoded_alphabet_array = []
+    for i in range(-shiftNumber, 0):
+        encoded_alphabet_array.append(alphabet_array[i])
+    for i in range(0, 26 - shiftNumber):
+        encoded_alphabet_array.append(alphabet_array[i])
+    encodedMessage = ""
+    for i in message:
+        encodedMessage += encoded_alphabet_array[alphabet_array.index(i)]
+    return encodedMessage
+    
+
