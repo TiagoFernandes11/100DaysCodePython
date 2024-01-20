@@ -28,6 +28,14 @@ class Snake:
             self.snake_segments[i].goto(snake_x_cord, snake_y_cord)
         self.head.forward(MOVE_DISTANCE)
 
+    def add_segment(self):
+        snake_part = turtle.Turtle()
+        snake_part.penup()
+        snake_part.shape("square")
+        snake_part.goto(self.snake_segments[len(self.snake_segments) - 1].xcor(), self.snake_segments[len(self.snake_segments) - 1].ycor())
+        snake_part.color("white")
+        self.snake_segments.append(snake_part)
+
     def up(self):
         if self.head.heading() != DOWN:
             self.head.setheading(UP)
