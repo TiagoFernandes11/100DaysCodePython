@@ -24,6 +24,12 @@ class CarManager:
         new_car.goto(300, randint(-260, 300))
         self.all_cars.append(new_car)
 
+    def clean(self):
+        for car in self.all_cars:
+            car.color("white")
+            car.goto(500, 500)
+        self.all_cars = []
+
 
     def move_cars(self):
         for car in self.all_cars:

@@ -27,4 +27,15 @@ while game_is_on:
     i += 1
     car_manager.move_cars()
 
+    for car in car_manager.all_cars:
+        if car.distance(player) < 30:
+            game_is_on = False
+            scoreboard.game_over()
+
+    if player.ycor() >= 260:
+        player.reset_positon()
+        scoreboard.add_point()
+        car_manager.clean()
+
+
 screen.exitonclick()
