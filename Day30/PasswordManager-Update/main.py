@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -40,16 +41,50 @@ def complete_password_random():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save_password():
-    if password_input.get() != "" and username_input.get() != "" and password_input.get() != "":
-        with open("passwords.txt", "a") as file:
-            file.write(website_input.get() + " | " + username_input.get() + " | " + password_input.get() + "\n")
-        website_input.delete(0, END)
-        username_input.delete(0, END)
-        password_input.delete(0, END)
-        messagebox.showinfo("Success", "Entry was saved")
+    website = website_input.get()
+    password = password_input.get()
+    username = username_input.get()
+    new_data = {
+        website: {
+            "email": username,
+            "password": password
+        }
+    }
 
+    if password_input.get() != "" and username_input.get() != "" and password_input.get() != "":
+        try:
+            with open("passwords.json", "r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("passwords.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            data.update(new_data)
+            with open("passwords.json", "w") as file:
+                json.dump(data, file, indent=4)
+        finally:
+            website_input.delete(0, END)
+            username_input.delete(0, END)
+            password_input.delete(0, END)
+            messagebox.showinfo("Success", "Entry was saved")
+
+
+# ---------------------------- Search site ------------------------------- #
+
+
+def search_site_entry():
+    website = website_input.get()
+    with open("passwords.json") as file:
+        data = json.load(file)
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(website, f"Username: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo("Error", f"There is not a entry for {website}")
 
 # ---------------------------- UI SETUP ------------------------------- #
+
 
 window = Tk()
 window.title("Password Manager")
@@ -67,7 +102,7 @@ website_input = Entry(width=20)
 website_input.grid(column=1, row=1)
 website_input.focus()
 
-website_search_button = Button(text="Search")
+website_search_button = Button(text="Search", command=search_site_entry)
 website_search_button.grid(column=2, row=1)
 
 username_input_label = Label(text="Email/Username")
