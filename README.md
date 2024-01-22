@@ -1,6 +1,9 @@
 Alguns dos projetos que trabalhei nessa maratona:
 
+Adventure text game:
 <img width="517" alt="image" src="https://github.com/TiagoFernandes11/100DaysCodePython/assets/89404933/e4a398cd-0f38-4619-91d0-5ad6b007664e">
+
+Snake Game:
 <img width="447" alt="image" src="https://github.com/TiagoFernandes11/100DaysCodePython/assets/89404933/c4b84828-07c4-4cc8-9b2c-eba489cd41a8">
 <img width="598" alt="image" src="https://github.com/TiagoFernandes11/100DaysCodePython/assets/89404933/296da2e6-18e3-4006-a2f2-4acee7d56756">
 <img width="449" alt="image" src="https://github.com/TiagoFernandes11/100DaysCodePython/assets/89404933/47b23673-d5c8-4e74-abe1-cb0c904f76bc">
