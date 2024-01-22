@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
 import random
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -11,10 +13,9 @@ def generate_password():
 
     final_password = ""
 
-    print("Welcome to the PyPassword Generator!")
-    nr_letters = int(input("How many letters would you like in your password?\n"))
-    nr_numbers = int(input(f"How many numbers would you like?\n"))
-    nr_symbols = int(input(f"How many symbols would you like?\n"))
+    nr_letters = 4
+    nr_numbers = 4
+    nr_symbols = 4
 
     randomizer = []
 
@@ -31,9 +32,25 @@ def generate_password():
 
     return final_password
 
+
+def complete_password_random():
+    password_input.insert(0, generate_password())
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+def save_password():
+    if password_input.get() != "" and username_input.get() != "" and password_input.get() != "":
+        with open("passwords.txt", "a") as file:
+            file.write(website_input.get() + " | " + username_input.get() + " | " + password_input.get() + "\n")
+        website_input.delete(0, END)
+        username_input.delete(0, END)
+        password_input.delete(0, END)
+        messagebox.showinfo("Success", "Entry was saved")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
+
 window = Tk()
 window.title("Password Manager")
 window.config(padx=20, pady=20)
@@ -48,6 +65,7 @@ website_input_label.grid(column=0, row=1)
 
 website_input = Entry(width=40)
 website_input.grid(column=1, row=1, columnspan=2)
+website_input.focus()
 
 username_input_label = Label(text="Email/Username")
 username_input_label.grid(column=0, row=2)
@@ -61,11 +79,10 @@ password_input_label.grid(column=0, row=3)
 password_input = Entry()
 password_input.grid(column=1, row=3)
 
-generate_password_button = Button(text="generate password")
+generate_password_button = Button(text="generate password", command=complete_password_random)
 generate_password_button.grid(column=2, row=3)
 
-add_button = Button(text="add", width=10)
+add_button = Button(text="add", width=10, command=save_password)
 add_button.grid(column=1, row=4)
-
 
 window.mainloop()
