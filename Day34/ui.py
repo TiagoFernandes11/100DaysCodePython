@@ -1,36 +1,59 @@
+import tkinter
 from tkinter import *
+from quiz_brain import QuizBrain
+import html
 
 THEME_COLOR = "#375362"
 
-score = 0
 
-window = Tk()
-window.config(width=300, height=400, bg=THEME_COLOR, padx=20, pady=20)
-window.title("Quiz")
+class QuizInterface:
 
-score_label = Label(text=f"Score: {score}")
-score_label.config(bg=THEME_COLOR, highlightthickness=0)
-score_label.grid(column=1, row=0)
+    def __init__(self, quiz: QuizBrain):
+        self.q_text = None
+        self.quiz = quiz
 
-canvas = Canvas(width= 260, height=200)
-canvas.create_text(130, 100, text="Frase vai aqui", font=("Arial", 22, "bold"))
-canvas.grid(column=0, row=1, columnspan=2)
+        self.window = Tk()
+        self.window.config(width=300, height=400, bg=THEME_COLOR, padx=20, pady=20)
+        self.window.title("Quiz")
 
-pad = Canvas(width=260, height=20)
-pad.config(bg=THEME_COLOR, highlightthickness=0)
-pad.grid(column=0, row=2, columnspan=2)
+        self.score_label = Label(text="Score: 0", fg="white")
+        self.score_label.config(bg=THEME_COLOR, highlightthickness=0)
+        self.score_label.grid(column=1, row=0)
 
-false_image = PhotoImage(file="images/false.png")
-false_button = Button(image=false_image)
-# false_button.config(height=50, width=50)
-false_button.grid(column=0, row=3)
+        self.canvas = Canvas(width=260, height=200)
+        self.q_text = self.canvas.create_text(130, 100, width=240, text="Question text", font=("Arial", 20, "italic"))
+        self.canvas.grid(column=0, row=1, columnspan=2, pady=20)
 
-true_image = PhotoImage(file="images/true.png")
-# true_image.config(height=50, width=50)
-true_button = Button(image=true_image)
-true_button.grid(column=1, row=3)
+        false_image = PhotoImage(file="images/false.png")
+        self.false_button = Button(image=false_image, command=self.false_pressed)
+        self.false_button.grid(column=0, row=2)
+
+        true_image = PhotoImage(file="images/true.png")
+        self.true_button = Button(image=true_image, command=self.true_pressed)
+        self.true_button.grid(column=1, row=2)
+
+        self.get_next_question()
+
+        self.window.mainloop()
+
+    def get_next_question(self):
+        if self.quiz.still_has_questions():
+            question_text = self.quiz.next_question()
+            self.canvas.itemconfig(self.q_text, text=html.unescape(question_text), font=("Arial", 15, "italic"))
+        else:
+            self.window.destroy()
 
 
-window.mainloop()
 
+    def true_pressed(self):
+        self.quiz.check_answer("True")
+        self.score_label.config(text=f"Score: {self.quiz.score}")
+        self.get_next_question()
 
+    def false_pressed(self):
+        self.quiz.check_answer("False")
+        self.score_label.config(text=f"Score: {self.quiz.score}")
+        self.get_next_question()
+
+    def close_window(self):
+        self.window.destroy()
