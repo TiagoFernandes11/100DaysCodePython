@@ -15,8 +15,8 @@ sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
         scope="playlist-modify-private",
         redirect_uri="http://example.com",
-        client_id="YOUR CLIENT ID",
-        client_secret="YOUR CLIENT SECRET",
+        client_id="Insert Client id here",
+        client_secret="Insert secret key here",
         show_dialog=True,
         cache_path="token.txt"
     )
@@ -29,8 +29,8 @@ song_uris = []
 year = date.split("-")[0]
 for song in song_names:
     result = sp.search(q=f"track:{song} year:{year}", type="track")
-    print(result)
     try:
+        print(result)
         uri = result["tracks"]["items"][0]["uri"]
         song_uris.append(uri)
     except IndexError:
