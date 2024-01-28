@@ -14,6 +14,7 @@ def make_bold(function):
 def hello_world():
     return '<h1 style= "text-align: center">Hello, World!</h1>'
 
+
 @app.route("/bye")
 @make_bold
 def bye():
