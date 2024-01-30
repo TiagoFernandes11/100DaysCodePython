@@ -37,6 +37,10 @@ with app.app_context():
 
 # CREATE RECORD
 with app.app_context():
-    new_book = Book(id=1, title="Harry Potter", author="J. K. Rowling", rating=9.3)
+    new_book = Book(id=3, title="75 tons", author="J. K. Rowling", rating=9.3)
     db.session.add(new_book)
     db.session.commit()
+
+with app.app_context():
+    result = db.session.execute(db.select(Book).order_by(Book.title))
+    all_books = result.scalars()
