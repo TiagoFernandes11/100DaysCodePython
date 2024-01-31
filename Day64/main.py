@@ -3,10 +3,8 @@ from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.fields.numeric import IntegerField
 from wtforms.validators import DataRequired
 import requests
 
@@ -52,6 +50,7 @@ class FindMovieForm(FlaskForm):
     title = StringField("Movie Title", validators=[DataRequired()])
     submit = SubmitField("Add Movie")
 
+
 new_movie = Movie(
     title="Phone Booth",
     year=2002,
@@ -82,8 +81,13 @@ second_movie = Movie(
 
 @app.route("/")
 def home():
-    result = db.session.execute(db.select(Movie).order_by(Movie.id))
-    all_movies = result.scalars()
+    result = db.session.execute(db.select(Movie).order_by(Movie.rating))
+    all_movies = result.scalars().all()
+
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies) - i
+    db.session.commit()
+
     return render_template("index.html", movies=all_movies)
 
 
