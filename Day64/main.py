@@ -48,16 +48,9 @@ with app.app_context():
     db.create_all()
 
 
-class NewMovie(FlaskForm):
-    title = StringField(label="Movie title", validators=[DataRequired(message="Title is required")])
-    year = IntegerField(label="Year")
-    description = StringField(label="Movie description")
-    rating = IntegerField(label="Rating 0 - 10")
-    ranking = IntegerField(label="Ranking")
-    review = StringField(label="Movie review")
-    img_url = StringField(label="Image url")
-    submit = SubmitField(label="Done")
-
+class FindMovieForm(FlaskForm):
+    title = StringField("Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
 
 new_movie = Movie(
     title="Phone Booth",
@@ -94,24 +87,15 @@ def home():
     return render_template("index.html", movies=all_movies)
 
 
-@app.route("/movie_register", methods=["GET", "POST"])
+@app.route("/add", methods=["GET", "POST"])
 def add_movie():
-    form = NewMovie()
+    form = FindMovieForm()
     if form.validate_on_submit():
-        movie = Movie(
-            title=form.title.data,
-            year=form.year.data,
-            description=form.description.data,
-            rating=form.rating.data,
-            ranking=form.ranking.data,
-            review=form.review.data,
-            img_url=form.img_url.data
-        )
-        with app.app_context():
-            db.session.add(movie)
-            db.session.commit()
-        return redirect(url_for('home'))
+        movie_title = form.title.data
 
+        response = requests.get("MOVIE_DB_SEARCH_URL", params={"api_key": "MOVIE_DB_API_KEY", "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
     return render_template("add.html", form=form)
 
 
