@@ -1,3 +1,5 @@
-body{
-background-color:pink
+section {
+    background-image: url(static/the-creation-of-adam-4889767_1920.jpg)
+    background-position: center top;
+    background-size: 100% auto;
 }
