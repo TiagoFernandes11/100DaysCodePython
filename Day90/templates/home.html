@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <h1>Todo list</h1>
+    {%for task in tasks%}
+    <h2>-{{task.id}}</h2>
+    <h3>{{task.title}}</h3>
+    <h4>{{task.description}}</h4>
+    {%endfor%}
+</body>
+</html>

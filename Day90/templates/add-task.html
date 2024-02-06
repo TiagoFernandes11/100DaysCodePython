@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% from "bootstrap5/form.html" import render_form %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task add</title>
+</head>
+{% block content %}
+<body>
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+</body>
+{% endblock %}
+</html>
