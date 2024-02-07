@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>To-do List</title>
-    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <h1>Todo list</h1>
+    <a href="{{url_for('register_task')}}">Register new task</a>
     {%for task in tasks%}
     <h2>-{{task.id}}</h2>
     <h3>{{task.title}}</h3>
     <h4>{{task.description}}</h4>
+    <a href="{{url_for('delete_task', id=task.id)}}">Delete</a>
     {%endfor%}
 </body>
 </html>

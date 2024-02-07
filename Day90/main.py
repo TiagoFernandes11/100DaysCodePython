@@ -57,5 +57,13 @@ def register_task():
     return render_template("add-task.html", form=form)
 
 
+@app.route("/task/<int:id>/delete", methods=["GET", "POST"])
+def delete_task(id):
+    task = db.get_or_404(Task, id)
+    db.session.delete(task)
+    db.session.commit()
+    return index()
+
+
 if __name__ == "__main__":
     app.run(debug=True)
