@@ -1,4 +1,13 @@
 import http.client
+from pypdf import PdfReader
+
+
+def read_pdf(pdf):
+    reader = PdfReader(pdf)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() + "\n"
+    return text
 
 
 def save_to_mp3_file(text):
@@ -24,5 +33,4 @@ def save_to_mp3_file(text):
     print("Audio file saved as 'output.mp3'")
 
 
-save_to_mp3_file("This is a study test")
-
+save_to_mp3_file(read_pdf("example.pdf"))
